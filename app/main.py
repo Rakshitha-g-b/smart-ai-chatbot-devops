@@ -32,8 +32,7 @@ async def metrics_middleware(request: Request, call_next):
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
+    return templates.TemplateResponse(request, "index.html")
 @app.post("/chat")
 async def chat(message: str = Form(...), session_id: str = Form("default")):
     CHAT_REQUESTS.inc()
