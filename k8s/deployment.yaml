@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smart-ai-chatbot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: smart-ai-chatbot
+  template:
+    metadata:
+      labels:
+        app: smart-ai-chatbot
+    spec:
+      containers:
+        - name: chatbot
+          image: smart-ai-chatbot-devops:latest
+          ports:
+            - containerPort: 8000

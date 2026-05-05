@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: smart-chatbot-app
+    ports:
+      - "8000:8000"
+    networks:
+      - chatbot-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: smart-chatbot-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - app
+    networks:
+      - chatbot-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: smart-chatbot-grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - chatbot-net
+
+networks:
+  chatbot-net:
+    driver: bridge
