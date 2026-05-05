@@ -43,7 +43,10 @@ async def chat(message: str = Form(...), session_id: str = Form("default")):
 
     if session_id not in conversation_histories:
         conversation_histories[session_id] = [
-            {"role": "system", "content": "You are a helpful AI chatbot. Answer like ChatGPT or Perplexity: natural, clear, and concise."}
+            {
+                "role": "system",
+                "content": "You are a helpful AI chatbot. Answer like ChatGPT or Perplexity: natural, clear, and concise."
+            }
         ]
 
     conversation_histories[session_id].append({"role": "user", "content": message})
@@ -58,6 +61,7 @@ async def chat(message: str = Form(...), session_id: str = Form("default")):
         return JSONResponse({"reply": reply})
     except Exception as e:
         return JSONResponse({"reply": f"Error contacting model: {str(e)}"})
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
